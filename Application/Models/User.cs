@@ -22,6 +22,8 @@ public class User : BaseModel
 
     public virtual ICollection<UserRole> UserRoles { get; set; }
 
+    public virtual ICollection<Table> Tables { get; set; }
+    
     [NotMapped]
     public bool IsAuthenticated { get; set; }
 }

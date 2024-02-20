@@ -1,18 +1,68 @@
 ﻿@page "/dashboard"
-@attribute [Authorize]
+
+@code {
+    [CascadingParameter] public HttpContext HttpContext { get; set; } = default!;
+    [CascadingParameter] public PageState PageState { get; set; } = default!;
+    [Inject] TableService TableService { get; set; } = default!;
+    List<Table> tables = new List<Table>();
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+
+    protected override async void OnInitialized()
+    {
+        tables = PageState.User.Tables.ToList();
+    }
+
+}
+
 
 <PageTitle>Dashboard</PageTitle>
 
 <section>
     <article class="space-y-4">
-        <h1 class="text-3xl font-bold">
-            Dashboard
-        </h1>
+
+        <div class="flex justify-center justify-between mt-10">
+            <h1 class="text-3xl font-bold">
+                Dashboard
+            </h1>
+            <button class="btn btn-primary">
+                <a href="/add-table">Add Table</a>
+            </button>
+        </div>
+
+      <div class="divider"></div>
+
         <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
-                <p>
-                    You're logged in!
-                </p>
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <!-- head -->
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created At</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var table in tables)
+                        {
+                            <tr>
+                                <th>@table.Name</th>
+                                <td>@table.CreatedAt.ToLocalTime()</td>
+                                <td>
+                                    <button class="btn btn-secondary">
+                                        <a href="/add-table/@table.Id">Edit Table</a>
+                                    </button>
+                                </td>
+                                <td>
+                                    <DeleteTable tableID="table.Id"/>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </article>

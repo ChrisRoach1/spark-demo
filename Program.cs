@@ -45,7 +45,10 @@ app.UseAuthorization();
 app.UseStaticFiles();
 app.UseSession();
 app.UseAntiforgery();
-app.MapRazorComponents<PageRoutes>();
+
+app.MapRazorComponents<PageRoutes>().AddInteractiveServerRenderMode();
+//app.MapRazorComponents<PageRoutes>();
+
 app.MapMinimalApis<Program>();
 
 app.Services.SetupScheduledJobs();

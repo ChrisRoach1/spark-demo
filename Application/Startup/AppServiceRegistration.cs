@@ -11,6 +11,7 @@ using FluentValidation;
 using spark_demo.Pages.Auth;
 using spark_demo.Application.Models;
 using Microsoft.Extensions.DependencyInjection;
+using spark_demo.Application.Services;
 
 namespace spark_demo.Application.Startup;
 
@@ -29,23 +30,29 @@ public static class AppServicesRegistration
         services.AddEventServices();
         services.AddEvents();
         services.AddMailer(config);
-        services.AddRazorComponents();
+        services.AddRazorComponents().AddInteractiveServerComponents();
         services.AddDistributedMemoryCache();
         services.AddSession(options => {
             options.Cookie.Name = ".spark_demo";
             options.IdleTimeout = TimeSpan.FromMinutes(1);
         });
+
+        services.AddHttpContextAccessor();
         return services;
     }
 
     private static IServiceCollection AddCustomServices(this IServiceCollection services)
     {
         // add custom services
+        services.AddScoped<HttpContextAccessor>();
         services.AddScoped<UsersService>();
         services.AddScoped<RolesService>();
         services.AddScoped<IAuthValidator, SparkAuthValidator>();
         services.AddScoped<AuthService>();
         services.AddScoped<IValidator<Register.RegisterForm>, Register.RegisterFormValidator>();
+        services.AddScoped<TableService>();
+        services.AddScoped<BogusService>();
+        
         return services;
     }
 

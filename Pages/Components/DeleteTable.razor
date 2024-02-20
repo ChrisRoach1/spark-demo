@@ -1,0 +1,22 @@
+@rendermode InteractiveServer
+
+@code {
+    
+    [Parameter] public int tableID { get; set; }
+    [Inject] TableService _tableService { get; set; } = default!;
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+    }
+
+    private void Delete()
+    {
+        _tableService.DeleteTableById(tableID);
+        NavManager.NavigateTo("/dashboard");
+    }
+}
+
+<button type="button" class="btn btn-neutral" @onclick="Delete">
+    Delete
+</button>

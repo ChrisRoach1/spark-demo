@@ -1,27 +1,131 @@
 ﻿@page "/"
+
 @code {
+
     protected override void OnInitialized()
     {
         Log.Information("This is the homepage.");
     }
+
 }
 
 <PageTitle>Home</PageTitle>
 
-<section>
-    <article>
-        <div class="card bg-base-100 shadow-xl">
-            <div class="card-body space-y-6">
-                <h1 class="text-3xl font-bold">
-                    Build something beautiful
+<div>
+    <div class="hero mb-10 min-h-full bg-base-100">
+        <div class="hero-content text-center">
+            <div class="max-w-md">
+                <h1 class="text-5xl font-bold">
+                    The easiest way to fake some APIs
                 </h1>
-                <p>
-                    Spark picks up where ASP.NET leaves off. Build production ready, full-stack web applications fast.
-                </p>
-                <p>
-                    View the <a class="link" href="https://spark-framework.net" target="_blank">documentation →</a>
+                <p class="py-6">
+                    <i>Fake it til you make it!</i>
                 </p>
             </div>
         </div>
-    </article>
-</section>
+    </div>
+
+    <section class="py-14">
+        <div class="mx-auto max-w-screen-xl px-4 text-gray-600 md:px-8">
+            <div class="relative mx-auto max-w-xl sm:text-center">
+                <h3 class="text-3xl font-semibold text-gray-800 sm:text-4xl">
+                    Pricing
+                </h3>
+            </div>
+            <div class="mt-16 justify-center gap-6 space-y-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-2">
+                <div class="relative flex flex-1 flex-col items-stretch rounded-xl border-2 p-8">
+                    <div>
+                        <span class="font-medium text-indigo-600">
+                            Free
+                        </span>
+                        <div class="mt-4 text-3xl font-semibold text-gray-800">
+                            $0
+                        </div>
+                    </div>
+                    <ul class="space-y-3 py-8">
+                        <li class="flex items-center gap-5">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-indigo-600"
+                                viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    fillRule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clipRule="evenodd">
+                                </path>
+                            </svg>
+                            2 Tables
+                        </li>
+                        <li class="flex items-center gap-5">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-indigo-600"
+                                viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    fillRule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clipRule="evenodd">
+                                </path>
+                            </svg>
+                            250 records per table
+                        </li>                           
+                    </ul>
+                    <div class="flex flex-1 items-end">
+                        <button class="btn btn-primary w-full rounded-lg px-3 py-3 text-sm font-semibold duration-150">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative flex flex-1 flex-col items-stretch rounded-xl border-2 p-8">
+                    <div>
+                        <span class="font-medium text-indigo-600">
+                            Pro
+                        </span>
+                        <div class="mt-4 text-3xl font-semibold text-gray-800">
+                            $2
+                        </div>
+                    </div>
+                    <ul class="space-y-3 py-8">
+                        <li class="flex items-center gap-5">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-indigo-600"
+                                viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    fillRule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clipRule="evenodd">
+                                </path>
+                            </svg>
+                            20 Tables
+                        </li>
+                        <li class="flex items-center gap-5">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-indigo-600"
+                                viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    fillRule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clipRule="evenodd">
+                                </path>
+                            </svg>
+                            500 records per table
+                        </li>                           
+                    </ul>
+                    <div class="flex flex-1 items-end">
+                        <button class="btn btn-primary w-full rounded-lg px-3 py-3 text-sm font-semibold duration-150">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>

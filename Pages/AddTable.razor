@@ -1,0 +1,142 @@
+@page "/add-table/{tableID:int?}"
+@using spark_demo.Application.DTOs
+@rendermode InteractiveServer
+
+@code {
+
+    public class SelectOptions()
+    {
+        public string Name { get; set; } = default!;
+        public string Value { get; set; } = default!;
+    }
+    
+    [Inject] NavigationManager NavManager { get; set; } = default!;
+    [Inject] TableService _tableService { get; set; } = default!;
+    [Parameter] public int? tableID { get; set; }
+    
+    [SupplyParameterFromForm(Name = "TableForm")]
+    public TableDto? TableForm { get; set; }
+
+    private List<SelectOptions> fieldValues = new();
+
+    
+    protected override async Task OnInitializedAsync()
+    {
+        fieldValues.Add(new SelectOptions { Name = "Random Full Name", Value = "Random Full Name"});
+        fieldValues.Add(new SelectOptions { Name = "Random Job Title", Value = "Random Job Title"});
+        fieldValues.Add(new SelectOptions { Name = "Random Date", Value = "Random Date"});
+        fieldValues.Add(new SelectOptions { Name = "Random Int", Value = "Random Int"});
+        fieldValues.Add(new SelectOptions { Name = "Random Big Int", Value = "Random Big Int"});
+        fieldValues.Add(new SelectOptions { Name = "Random Boolean", Value = "Random Boolean"});
+        fieldValues.Add(new SelectOptions { Name = "Random Avatar", Value = "Random Avatar"});
+        fieldValues.Add(new SelectOptions { Name = "Random Street Address", Value = "Random Street Address"});
+        fieldValues.Add(new SelectOptions { Name = "Random Paragraph", Value = "Random Paragraph"});
+        fieldValues.Add(new SelectOptions { Name = "Random String", Value = "Random String"});
+        
+        if (tableID.HasValue)
+        {
+            var existingTable = await _tableService.GetTablesById(tableID.Value);
+            var tableFields = existingTable.TableFields.ToList().Select(x => new TableFieldDto
+            {
+                Name = x.Name,
+                Value = x.Value
+            }).ToList();
+            
+            TableForm = new TableDto
+            {
+                Name = existingTable.Name,
+                ID = existingTable.Id,
+                tableFields = tableFields
+            };
+        }
+        else
+        {
+            TableForm ??= new();
+            TableForm.tableFields = new List<TableFieldDto>();        
+        }
+    }
+
+    private async Task OnSubmit()
+    {
+        if (tableID.HasValue)
+        {
+            _tableService.UpdateTableForUser(TableForm);
+        }
+        else
+        {
+            _tableService.CreateTableForUser(TableForm);
+        }
+        
+        NavManager.NavigateTo("/dashboard");      
+
+    }
+
+    private void addNewField()
+    {
+        TableForm.tableFields.Add(new TableFieldDto());
+    }
+
+}
+
+<PageTitle>Add Table</PageTitle>
+
+
+<section>
+    <article class="space-y-4">
+
+        <div class="flex justify-center justify-between mt-10">
+            <h1 class="text-3xl font-bold">
+                Add Table
+            </h1>
+            <button class="btn btn-neutral">
+                <a href="/dashboard">Back</a>
+            </button>
+        </div>
+        <div class="divider"></div>
+
+
+        <EditForm id="tableForm" Model="TableForm" OnValidSubmit="OnSubmit" FormName="TableForm" method="post" Enhance class="grid grid-cols-1 gap-y-6">
+
+            <ObjectGraphDataAnnotationsValidator/>
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text font-medium">Name</span>
+                </div>
+                <InputText @bind-Value="TableForm.Name" type="text" class="input input-bordered w-full"/>
+                <ValidationMessage For="() => TableForm.Name"/>
+            </label>
+            @foreach (var field in TableForm.tableFields)
+            {
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text font-medium">Field Name</span>
+                    </div>
+                    <InputText @bind-Value="field.Name" type="text" class="input input-bordered w-full"/>
+                    <ValidationMessage For="() => field.Name"/>
+
+                    <div class="label">
+                        <span class="label-text font-medium">Value</span>
+                    </div>
+                    <select @bind="field.Value" class="select select-bordered w-full max-w-xs">
+                        <option disabled selected>Who shot first?</option>
+                        @foreach (var fieldValue in fieldValues)
+                        {
+                            <option>@fieldValue.Name</option>
+                        }
+                        
+                    </select>
+                    <ValidationMessage For="() => field.Value"/>
+                </label>
+            }
+            <div class="flex justify-end">
+                <button type="button" class="btn btn-neutral mr-5" @onclick="addNewField">
+                    Add Field
+                </button>
+                <button type="submit" form="tableForm" class="btn btn-primary">
+                    <span class="loading loading-spinner loading-xs htmx-indicator"></span>
+                    Save
+                </button>
+            </div>
+        </EditForm>
+    </article>
+</section>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using spark_demo.Application.Database;
 
@@ -10,9 +11,11 @@ using spark_demo.Application.Database;
 namespace sparkdemo.Application.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240213005357_AddTableTable")]
+    partial class AddTableTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -98,47 +101,6 @@ namespace sparkdemo.Application.Database.Migrations
                     b.ToTable("tables", (string)null);
                 });
 
-            modelBuilder.Entity("spark_demo.Application.Models.TableField", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("name");
-
-                    b.Property<int>("TableID")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("table_id");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("updated_at");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("value");
-
-                    b.HasKey("Id")
-                        .HasName("pk_table_fields");
-
-                    b.HasIndex("Id")
-                        .HasDatabaseName("ix_table_fields_id");
-
-                    b.HasIndex("TableID")
-                        .HasDatabaseName("ix_table_fields_table_id");
-
-                    b.ToTable("table_fields", (string)null);
-                });
-
             modelBuilder.Entity("spark_demo.Application.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -222,18 +184,6 @@ namespace sparkdemo.Application.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("spark_demo.Application.Models.TableField", b =>
-                {
-                    b.HasOne("spark_demo.Application.Models.Table", "Table")
-                        .WithMany("TableFields")
-                        .HasForeignKey("TableID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_table_fields_tables_table_id");
-
-                    b.Navigation("Table");
-                });
-
             modelBuilder.Entity("spark_demo.Application.Models.UserRole", b =>
                 {
                     b.HasOne("spark_demo.Application.Models.Role", "Role")
@@ -258,11 +208,6 @@ namespace sparkdemo.Application.Database.Migrations
             modelBuilder.Entity("spark_demo.Application.Models.Role", b =>
                 {
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("spark_demo.Application.Models.Table", b =>
-                {
-                    b.Navigation("TableFields");
                 });
 
             modelBuilder.Entity("spark_demo.Application.Models.User", b =>
