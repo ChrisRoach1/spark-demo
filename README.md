@@ -1,5 +1,9 @@
 ﻿<p align="center"><a href="https://spark-framework.net" target="_blank"><img src="https://i.imgur.com/AlMNK7I.png" width="400" alt="Spark Logo"></a></p>
 
+
+## About
+This project was an attempt to duplicate my existing site [fakeAPI](https://www.fakeapi.app/) using the .net Spark Framework.
+
 ## About Spark
 Spark is a web application framework built on top of ASP.NET. It takes the pain out of developing web apps by providing a working full stack application and providing out of the box solutions for common tasks such as:
 
